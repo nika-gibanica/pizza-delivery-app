@@ -1,4 +1,4 @@
-package com.agency04.sbss.pizza.model.pizza;
+package com.agency04.sbss.pizza.model;
 
 public enum Ingredients {
     TOMATO_SAUCE,

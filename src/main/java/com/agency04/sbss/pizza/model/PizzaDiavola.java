@@ -1,24 +1,23 @@
-package com.agency04.sbss.pizza.model.pizza;
+package com.agency04.sbss.pizza.model;
 
 import org.springframework.stereotype.Component;
 
 import java.util.EnumSet;
 import java.util.Set;
 
-@Component
 public class PizzaDiavola implements Pizza {
 
-    private String _name = "Diavola";
-    private Set<Ingredients> _ingredients = EnumSet.of(Ingredients.TOMATO_SAUCE, Ingredients.MOZZARELLA,
+    private String name = "Diavola";
+    private Set<Ingredients> ingredients = EnumSet.of(Ingredients.TOMATO_SAUCE, Ingredients.MOZZARELLA,
             Ingredients.SPICY_SALAMI, Ingredients.CHILLI_PEPPER);
 
     @Override
     public String getName(){
-        return _name;
+        return name;
     }
 
     @Override
     public Set<Ingredients> getIngredients(){
-        return _ingredients;
+        return ingredients;
     }
 }
