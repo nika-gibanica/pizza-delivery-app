@@ -1,8 +1,11 @@
-package com.agency04.sbss.pizza;
+package com.agency04.sbss.pizza.model.pizza;
+
+import org.springframework.stereotype.Component;
 
 import java.util.EnumSet;
 import java.util.Set;
 
+@Component
 public class PizzaCapricciosa implements Pizza {
 
     private String _name = "Capricciosa";

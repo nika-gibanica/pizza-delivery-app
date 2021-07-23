@@ -7,39 +7,11 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- enable component scanning -->
+    <context:component-scan base-package="com.agency04.sbss.pizza" />
+
     <context:property-placeholder location="classpath:application.properties"/>
 
     <!-- Define your Beans here -->
-    <bean id="pizzaToOrder" class="com.agency04.sbss.pizza.PizzaMargherita">
-    </bean>
 
-    <bean id="pizzeriaServiceOne"
-          class="com.agency04.sbss.pizza.PizzeriaOne">
-
-        <!-- inject literal values -->
-        <property name="address" value="41 Tomato Road, Rome, Italy"/>
-        <property name="name" value="Pizzeria Italiana"/>
-    </bean>
-
-    <bean id="pizzeriaServiceTwo"
-          class="com.agency04.sbss.pizza.PizzeriaTwo">
-
-        <!-- inject literal values -->
-        <property name="address" value="${pizzeria.address}"/>
-        <property name="name" value="${pizzeria.name}"/>
-    </bean>
-
-    <bean id="pizzaDeliveryServiceOne"
-          class="com.agency04.sbss.pizza.PizzaDeliveryService">
-
-        <!-- constructor injection -->
-        <constructor-arg ref="pizzeriaServiceOne" />
-    </bean>
-
-    <bean id="pizzaDeliveryServiceTwo"
-          class="com.agency04.sbss.pizza.PizzaDeliveryService">
-
-        <!-- setter injection -->
-        <property name="pizzeriaService" ref="pizzeriaServiceTwo"/>
-    </bean>
 </beans>

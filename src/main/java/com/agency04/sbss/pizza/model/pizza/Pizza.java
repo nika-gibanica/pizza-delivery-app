@@ -1,6 +1,5 @@
-package com.agency04.sbss.pizza;
+package com.agency04.sbss.pizza.model.pizza;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 public interface Pizza {

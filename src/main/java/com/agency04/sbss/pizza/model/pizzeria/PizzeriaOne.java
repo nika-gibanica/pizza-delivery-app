@@ -1,17 +1,17 @@
-package com.agency04.sbss.pizza;
+package com.agency04.sbss.pizza.model.pizzeria;
 
+import com.agency04.sbss.pizza.model.pizza.Pizza;
+import com.agency04.sbss.pizza.service.PizzeriaService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class PizzeriaOne implements PizzeriaService {
 
+    @Value("${pizzeriaOne.name}")
     private String _name;
+    @Value("${pizzeriaOne.address}")
     private String _address;
-
-    public void setName(String _name) {
-        this._name = _name;
-    }
-
-    public void setAddress(String _address) {
-        this._address = _address;
-    }
 
     @Override
     public String getName(){
