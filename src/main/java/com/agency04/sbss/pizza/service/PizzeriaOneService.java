@@ -2,15 +2,30 @@ package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.model.Pizza;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 @Component
+@Scope("singleton")
 public class PizzeriaOneService implements PizzeriaService {
 
     @Value("${pizzeriaOne.name}")
     private String name;
     @Value("${pizzeriaOne.address}")
     private String address;
+
+    @PostConstruct
+    public void doStartup(){
+        System.out.println("-- PostConstruct PizzeriaOneService method --");
+    }
+
+    @PreDestroy
+    public void doCleanup(){
+        System.out.println("-- PreDestroy PizzeriaOneService method --");
+    }
 
     @Override
     public String getName(){

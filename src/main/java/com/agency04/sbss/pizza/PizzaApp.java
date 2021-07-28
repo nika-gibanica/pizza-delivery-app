@@ -18,14 +18,26 @@ public class PizzaApp {
         System.out.println(deliveryServiceFirst.orderPizza(pizzaToOrder));
 
         PizzeriaService pizzeriaOne = context.getBean("pizzeriaOneService", PizzeriaService.class);
+        PizzeriaService pizzeriaOneAgain = context.getBean("pizzeriaOneService", PizzeriaService.class);
+
+        boolean resultOne = (pizzeriaOne == pizzeriaOneAgain);
+        System.out.println("\nPointing to the same object: " + resultOne);
+        System.out.println("Memory location for pizzeriaOne: " + pizzeriaOne);
+        System.out.println("Memory location for pizzeriaOneAgain: " + pizzeriaOneAgain + "\n");
 
         System.out.println(pizzeriaOne.getName());
-        System.out.println(pizzeriaOne.getAddress());
+        System.out.println(pizzeriaOne.getAddress() + "\n");
 
         PizzeriaService pizzeriaTwo = context.getBean("pizzeriaTwoService", PizzeriaService.class);
+        PizzeriaService pizzeriaTwoAgain = context.getBean("pizzeriaTwoService", PizzeriaService.class);
+
+        boolean resultTwo = (pizzeriaTwo == pizzeriaTwoAgain);
+        System.out.println("\nPointing to the same object: " + resultTwo);
+        System.out.println("Memory location for pizzeriaTwo: " + pizzeriaTwo);
+        System.out.println("Memory location for pizzeriaTwoAgain: " + pizzeriaTwoAgain + "\n");
 
         System.out.println(pizzeriaTwo.getName());
-        System.out.println(pizzeriaTwo.getAddress());
+        System.out.println(pizzeriaTwo.getAddress() + "\n");
 
         context.close();
     }
