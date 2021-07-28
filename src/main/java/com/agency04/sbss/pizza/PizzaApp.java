@@ -4,13 +4,13 @@ import com.agency04.sbss.pizza.model.Pizza;
 import com.agency04.sbss.pizza.model.PizzaMargherita;
 import com.agency04.sbss.pizza.service.PizzeriaService;
 import com.agency04.sbss.pizza.service.PizzaDeliveryService;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class PizzaApp {
 
     public static void main(String[] args) {
 
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(PizzaConfig.class);
 
         PizzaDeliveryService deliveryServiceFirst = context.getBean("pizzaDeliveryService", PizzaDeliveryService.class);
         Pizza pizzaToOrder = new PizzaMargherita();
