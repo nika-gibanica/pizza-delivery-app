@@ -11,8 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Service
-//@Primary
-@Scope("prototype")
+@Primary
 public class PizzeriaTwoService implements PizzeriaService {
 
     @Value("${pizzeriaTwo.name}")
