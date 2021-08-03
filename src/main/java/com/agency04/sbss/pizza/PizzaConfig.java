@@ -10,7 +10,7 @@ import org.springframework.context.annotation.*;
 public class PizzaConfig {
 
     @Bean
-    public PizzeriaService pizzeriaOne(){
+    public PizzeriaOneService pizzeriaOne(){
         return new PizzeriaOneService();
     }
 }
