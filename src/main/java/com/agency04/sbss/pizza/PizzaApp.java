@@ -2,32 +2,31 @@ package com.agency04.sbss.pizza;
 
 import com.agency04.sbss.pizza.model.Pizza;
 import com.agency04.sbss.pizza.model.PizzaMargherita;
-import com.agency04.sbss.pizza.service.PizzeriaService;
 import com.agency04.sbss.pizza.service.PizzaDeliveryService;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+@SpringBootApplication
 public class PizzaApp {
 
-    public static void main(String[] args) {
+    private static ApplicationContext context;
 
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+    public static void main(String[] args) {
+        context = new AnnotationConfigApplicationContext(PizzaConfig.class);
+
+        SpringApplication.run(PizzaApp.class, args);
 
         PizzaDeliveryService deliveryServiceFirst = context.getBean("pizzaDeliveryService", PizzaDeliveryService.class);
         Pizza pizzaToOrder = new PizzaMargherita();
 
         System.out.println(deliveryServiceFirst.orderPizza(pizzaToOrder));
+    }
 
-        PizzeriaService pizzeriaOne = context.getBean("pizzeriaOneService", PizzeriaService.class);
-
-        System.out.println(pizzeriaOne.getName());
-        System.out.println(pizzeriaOne.getAddress());
-
-        PizzeriaService pizzeriaTwo = context.getBean("pizzeriaTwoService", PizzeriaService.class);
-
-        System.out.println(pizzeriaTwo.getName());
-        System.out.println(pizzeriaTwo.getAddress());
-
-        context.close();
+    public static ApplicationContext getApplicationContext() {
+        return context;
     }
 
 }
