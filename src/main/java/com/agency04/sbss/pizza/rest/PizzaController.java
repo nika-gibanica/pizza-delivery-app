@@ -68,6 +68,13 @@ public class PizzaController {
 
     @PostMapping("/delivery/order")
     public ResponseEntity orderDelivery(@RequestBody DeliveryOrderForm order) {
+        deliveryService = PizzaApp.getApplicationContext().getBean("pizzaDeliveryService", PizzaDeliveryService.class);
+        for (PizzaOrder o : order.getOrder()) {
+            if (!deliveryService.getPizzeriaService().getMenu().contains(o.getPizzaType())) {
+                throw new PizzaNotFoundException("Pizza " + o.getPizzaType().getItem() + " not found on the menu.");
+            }
+        }
+
         submittedOrders.add(order);
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -76,5 +83,4 @@ public class PizzaController {
     public List<DeliveryOrderForm> listOrders() {
         return submittedOrders;
     }
-
 }
