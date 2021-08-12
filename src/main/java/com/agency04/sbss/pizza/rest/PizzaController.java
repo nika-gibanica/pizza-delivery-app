@@ -1,35 +1,80 @@
 package com.agency04.sbss.pizza.rest;
 
 import com.agency04.sbss.pizza.PizzaApp;
-import com.agency04.sbss.pizza.model.Pizza;
-import com.agency04.sbss.pizza.model.PizzaMargherita;
+import com.agency04.sbss.pizza.form.DeliveryOrderForm;
+import com.agency04.sbss.pizza.model.*;
 import com.agency04.sbss.pizza.service.PizzaDeliveryService;
 import com.agency04.sbss.pizza.service.PizzeriaService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
+import java.util.*;
 
 @RestController
+@RequestMapping("/api")
 public class PizzaController {
 
-    @GetMapping("/")
-    public String orderPizzaMargherita() {
-        PizzaDeliveryService deliveryServiceFirst = PizzaApp.getApplicationContext().getBean("pizzaDeliveryService", PizzaDeliveryService.class);
-        Pizza pizzaToOrder = new PizzaMargherita();
+    private PizzaDeliveryService deliveryService;
+    private Map<String, Customer> customers;
+    private List<DeliveryOrderForm> submittedOrders;
 
-        return deliveryServiceFirst.orderPizza(pizzaToOrder);
+    @PostConstruct
+    public void loadData() {
+        customers = new HashMap<>();
+        submittedOrders = new ArrayList<>();
+
+        customers.put("pizzaLover", new Customer("pizzaLover", "Mary", "Gibbs", "mary.gibbs@gmail.com", "45 Oregano Street, Rome, Italy"));
     }
 
-    @GetMapping("/pizzeriaOne")
-    public String getPizzeriaOneInfo(){
-        PizzeriaService pizzeriaOne = PizzaApp.getApplicationContext().getBean("pizzeriaOneService", PizzeriaService.class);
-
-        return pizzeriaOne.getName() + " is at the address " + pizzeriaOne.getAddress();
+    @GetMapping("/pizzeria")
+    public PizzeriaService getPizzeriaInfo(){
+        deliveryService = PizzaApp.getApplicationContext().getBean("pizzaDeliveryService", PizzaDeliveryService.class);
+        return deliveryService.getPizzeriaService();
     }
 
-    @GetMapping("/pizzeriaTwo")
-    public String getPizzeriaTwoInfo(){
-        PizzeriaService pizzeriaTwo = PizzaApp.getApplicationContext().getBean("pizzeriaTwoService", PizzeriaService.class);
-
-        return pizzeriaTwo.getName() + " is at the address " + pizzeriaTwo.getAddress();
+    @GetMapping("/pizzeria/menu")
+    public List<MenuItem> getPizzeriaMenu(){
+        deliveryService = PizzaApp.getApplicationContext().getBean("pizzaDeliveryService", PizzaDeliveryService.class);
+        return deliveryService.getPizzeriaService().getMenu();
     }
+
+    @GetMapping("/customer/{username}")
+    public Customer getCustomer(@PathVariable String username){
+        return customers.get(username);
+    }
+
+    @PostMapping("/customer")
+    public ResponseEntity registerCustomer(@RequestBody Customer registrationForm) {
+        customers.put(registrationForm.getUsername(), registrationForm);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PutMapping("/customer")
+    public ResponseEntity updateCustomer(@RequestBody Customer customer) {
+        customers.put(customer.getUsername(), customer);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/customer/{username}")
+    public ResponseEntity deleteCustomer(@PathVariable String username) {
+        customers.remove(username);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PostMapping("/delivery/order")
+    public ResponseEntity orderDelivery(@RequestBody DeliveryOrderForm order) {
+        submittedOrders.add(order);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @GetMapping("/delivery/list")
+    public List<DeliveryOrderForm> listOrders() {
+        return submittedOrders;
+    }
+
 }
