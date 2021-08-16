@@ -7,11 +7,11 @@ public class MenuItem {
 
     private String item;
     private PizzaSizes size;
-    private float price;
+    private int price;
 
     public MenuItem(){}
 
-    public MenuItem(String item, PizzaSizes size, float price) {
+    public MenuItem(String item, PizzaSizes size, int price) {
         this.item = item;
         this.size = size;
         this.price = price;
@@ -33,11 +33,21 @@ public class MenuItem {
         this.size = size;
     }
 
-    public float getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(int price) {
         this.price = price;
+    }
+
+    public boolean equals(MenuItem item) {
+        if (!(this.getItem().equals(item.getItem()))
+                || !(this.getSize().equals(item.getSize()))
+                || (this.getPrice() != item.getPrice())) {
+            return false;
+        }
+        return true;
+
     }
 }

@@ -42,6 +42,10 @@ public class PizzaController {
 
     @GetMapping("/customer/{username}")
     public Customer getCustomer(@PathVariable String username){
+        if (customers.get(username) == null) {
+            throw new PizzaNotFoundException("Customer with username " + username + " not found.");
+        }
+
         return customers.get(username);
     }
 
@@ -61,6 +65,10 @@ public class PizzaController {
 
     @DeleteMapping("/customer/{username}")
     public ResponseEntity deleteCustomer(@PathVariable String username) {
+        if (customers.get(username) == null) {
+            throw new PizzaNotFoundException("Customer with username " + username + " not found.");
+        }
+
         customers.remove(username);
 
         return ResponseEntity.ok(HttpStatus.OK);
@@ -69,9 +77,17 @@ public class PizzaController {
     @PostMapping("/delivery/order")
     public ResponseEntity orderDelivery(@RequestBody DeliveryOrderForm order) {
         deliveryService = PizzaApp.getApplicationContext().getBean("pizzaDeliveryService", PizzaDeliveryService.class);
+        boolean onTheMenu;
+
         for (PizzaOrder o : order.getOrder()) {
-            if (!deliveryService.getPizzeriaService().getMenu().contains(o.getPizzaType())) {
-                throw new PizzaNotFoundException("Pizza " + o.getPizzaType().getItem() + " not found on the menu.");
+            onTheMenu = false;
+            for (MenuItem i : deliveryService.getPizzeriaService().getMenu()) {
+                if (o.getPizzaType().equals(i)) {
+                    onTheMenu = true;
+                }
+            }
+            if (!onTheMenu) {
+                throw new PizzaNotFoundException("Pizza " + o.getPizzaType().getSize().toString().toLowerCase() + " " + o.getPizzaType().getItem() + " with a price " + o.getPizzaType().getPrice() + " NOT FOUND on the menu.");
             }
         }
 
