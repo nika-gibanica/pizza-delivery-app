@@ -1,28 +1,29 @@
 package com.agency04.sbss.pizza.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.*;
+import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
+@Table(name="customer")
 public class Customer {
 
+    @Id
+    @Column(name="username")
     private String username;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String address;
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="customerDetails_id")
+    private CustomerDetails customerDetails;
 
     public Customer() {
 
     }
 
-    public Customer(String username, String firstName, String lastName, String email, String address) {
+    public Customer(String username, CustomerDetails customerDetails) {
         this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.address = address;
-    }
+        this.customerDetails = customerDetails;
 
+    }
 
     public String getUsername() {
         return username;
@@ -32,35 +33,11 @@ public class Customer {
         this.username = username;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
     }
 }

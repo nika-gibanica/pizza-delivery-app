@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 
 @Service
@@ -20,15 +20,17 @@ public class PizzeriaTwoService implements PizzeriaService {
     @Value("${pizzeriaTwo.address}")
     private String address;
 
-    private List<MenuItem> menu = new ArrayList<>();
+    private List<Pizza> menu = new ArrayList<>();
 
     @PostConstruct
     public void doStartup(){
-        menu.add(new MenuItem(new PizzaMargherita().getName(), PizzaSizes.SMALL, 22));
-        menu.add(new MenuItem(new PizzaMargherita().getName(), PizzaSizes.LARGE, 25));
-        menu.add(new MenuItem(new PizzaCapricciosa().getName(), PizzaSizes.LARGE, 27));
-        menu.add(new MenuItem(new PizzaDiavola().getName(), PizzaSizes.LARGE, 30));
-        menu.add(new MenuItem(new PizzaQuattroStagioni().getName(),  PizzaSizes.SMALL, 30));
+        menu.add(new Pizza("Margherita", EnumSet.of(Ingredients.TOMATO_SAUCE, Ingredients.MOZZARELLA, Ingredients.OREGANO)));
+        menu.add(new Pizza("Capricciosa", EnumSet.of(Ingredients.TOMATO_SAUCE, Ingredients.MOZZARELLA, Ingredients.ARTICHOKES,
+                Ingredients.MUSHROOMS, Ingredients.OLIVES, Ingredients.HAM)));
+        menu.add(new Pizza("Diavola", EnumSet.of(Ingredients.TOMATO_SAUCE, Ingredients.MOZZARELLA,
+                Ingredients.SPICY_SALAMI, Ingredients.CHILLI_PEPPER)));
+        menu.add(new Pizza("QuattroStagioni", EnumSet.of(Ingredients.TOMATO_SAUCE, Ingredients.MOZZARELLA,
+                Ingredients.MUSHROOMS, Ingredients.HAM, Ingredients.ARTICHOKES, Ingredients.OLIVES, Ingredients.OREGANO)));
 
         System.out.println("-- PostConstruct PizzeriaTwoService method --");
     }
@@ -48,11 +50,11 @@ public class PizzeriaTwoService implements PizzeriaService {
         return address;
     }
 
-    public List<MenuItem> getMenu() {
+    public List<Pizza> getMenu() {
         return menu;
     }
 
-    public void setMenu(List<MenuItem> menu) {
+    public void setMenu(List<Pizza> menu) {
         this.menu = menu;
     }
 
