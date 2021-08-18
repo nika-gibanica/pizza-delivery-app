@@ -1,27 +1,54 @@
 package com.agency04.sbss.pizza.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.*;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
 public class PizzaOrder {
 
-    private MenuItem pizzaType;
+    @Id
+    @GeneratedValue
+    private int id;
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="pizza_id")
+    private Pizza pizza;
+
+    @Enumerated(EnumType.STRING)
+    private Sizes size;
+
+    @Column
     private int quantity;
 
     public PizzaOrder(){ }
 
-    public PizzaOrder(MenuItem pizzaType, int quantity) {
-        this.pizzaType = pizzaType;
+    public PizzaOrder(Pizza pizza, Sizes size, int quantity) {
+        this.pizza = pizza;
+        this.size = size;
         this.quantity = quantity;
     }
 
-
-    public MenuItem getPizzaType() {
-        return pizzaType;
+    public int getId() {
+        return id;
     }
 
-    public void setPizzaType(MenuItem pizzaType) {
-        this.pizzaType = pizzaType;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Pizza getPizza() {
+        return pizza;
+    }
+
+    public void setPizza(Pizza pizza) {
+        this.pizza = pizza;
+    }
+
+    public Sizes getSize() {
+        return size;
+    }
+
+    public void setSize(Sizes size) {
+        this.size = size;
     }
 
     public int getQuantity() {

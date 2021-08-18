@@ -1,7 +1,7 @@
 package com.agency04.sbss.pizza.model;
 
-public enum PizzaSizes {
+public enum Sizes {
     SMALL,
-    LARGE,
-    JUMBO
+    MEDIUM,
+    LARGE
 }
